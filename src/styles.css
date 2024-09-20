@@ -33,12 +33,25 @@ body {
   grid-template-columns: calc(0.25 * var(--tile-size)) calc(
       8 * var(--tile-size)
     );
+  position: relative;
 }
 .ranks {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: space-around;
+  justify-content: space-between;
+  transform: translateX(20px);
+  font: 900;
+  font-size: 17px;
+}
+.light-color {
+  color: var(--light-tile);
+}
+.dark-color {
+  color: var(--dark-tile);
+}
+.rank {
+  margin-bottom: calc(var(--tile-size) - 18px);
 }
 
 .files {
@@ -46,9 +59,16 @@ body {
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: space-around;
-  height: calc(0.25 * var(--tile-size));
+
+  justify-content: space-between;
+
+  transform: translateY(-32px);
 }
+
+.file {
+  margin-left: calc(var(--tile-size) - 18px);
+}
+
 /* tiles */
 
 .tiles {
