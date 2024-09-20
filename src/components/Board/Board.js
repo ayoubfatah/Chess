@@ -2,6 +2,7 @@ import React from "react";
 import { getCharacter } from "../../helper";
 import Files from "./bits/Files";
 import Ranks from "./bits/Ranks";
+import Pieces from "../pieces/Pieces";
 
 export default function Board() {
   const ranks = Array(8)
@@ -29,6 +30,7 @@ export default function Board() {
           ));
         })}
       </div>
+      <Pieces />
       <Files files={files} />
     </div>
   );
