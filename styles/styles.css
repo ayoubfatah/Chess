@@ -1,0 +1,18 @@
+:root {
+  --title-size: 100px;
+  --light-tile: #f0d8b7;
+  --dark-tile: #5762ef;
+  --bg-color: #202020;
+}
+
+@media all and (max-width: 450px) {
+  :root {
+    --title-size: 50px;
+  }
+}
+
+body {
+  background: var(--bg-color);
+}
+
+/* BOARD */
