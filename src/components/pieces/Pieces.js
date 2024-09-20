@@ -1,38 +1,34 @@
-import React from "react";
+import React, { useRef, useState } from "react";
 import Piece from "./Piece";
+import { copyPosition, createPosition } from "../../helper";
 export default function Pieces() {
-  const position = new Array(8).fill("").map((x) => new Array(8).fill(""));
+  const [position, setPosition] = useState(createPosition);
+  const ref = useRef();
+  const calculateCoord = (e) => {
+    const { width, left, top } = ref.current.getBoundingClientRect();
+    const size = width / 8;
+    const y = Math.floor((e.clientX - left) / size);
+    const x = 7 - Math.floor((e.clientY - top) / size);
+    return { x, y };
+  };
+  //   drag and drop logic
+  const onDrop = (e) => {
+    const newPosition = copyPosition(position);
+    // we need some values here
+    // 1 - the piece  that has been move we can get it with e.dataTransfer.getData("text")
+    const [p, rank, file] = e.dataTransfer.getData("text").split(",");
+    // 2 we need to see where the  piece got dropped
+    console.log(p, "ikhan");
+    const { x, y } = calculateCoord(e);
+    newPosition[rank][file] = "";
+    newPosition[x][y] = p;
+    setPosition(newPosition);
+  };
 
-  for (let i = 0; i < 8; i++) {
-    position[1][i] = "wp";
-  }
-
-  for (let i = 0; i < 8; i++) {
-    position[6][i] = "bp";
-  }
-
-  //   white pieces
-  position[0][0] = "wr";
-  position[0][1] = "wkn";
-  position[0][2] = "wb";
-  position[0][3] = "wq";
-  position[0][4] = "wk";
-  position[0][5] = "wb";
-  position[0][6] = "wkn";
-  position[0][7] = "wr";
-
-  //   black pieces
-  position[7][0] = "br";
-  position[7][1] = "bkn";
-  position[7][2] = "bb";
-  position[7][3] = "bq";
-  position[7][4] = "bk";
-  position[7][5] = "bb";
-  position[7][6] = "bkn";
-  position[7][7] = "br";
-
+  //   so the onDrop can take over the onDragOver functionality
+  const onDragOver = (e) => e.preventDefault();
   return (
-    <div className="pieces">
+    <div ref={ref} onDragOver={onDragOver} onDrop={onDrop} className="pieces">
       {position.map((r, rank) =>
         r.map((f, file) =>
           position[rank][file] ? (
