@@ -43,5 +43,5 @@ export const copyPosition = (position) => {
       newPosition[rank][file] = position[rank][file];
     }
   }
-  return newPosition;
+  return newPosition;        
 };

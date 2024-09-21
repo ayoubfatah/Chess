@@ -1,11 +1,27 @@
+import { useReducer } from "react";
 import Board from "./components/Board/Board";
+import AppContext from "./context/Context";
 import "./styles.css";
+import { reducer } from "./reducer/reducer";
+
+import { createPosition } from "./helper";
 
 function App() {
+  const [appState, dispatch] = useReducer(reducer, {
+    position: [createPosition()],
+    turn: "white",
+  });
+  const providerState = {
+    appState,
+    dispatch,    
+  };
+
   return (
-    <div className="App">
-      <Board />
-    </div>
+    <AppContext.Provider value={{ providerState }}>
+      <div className="App">
+        <Board />
+      </div>
+    </AppContext.Provider>
   );
 }
 
