@@ -9,11 +9,12 @@ import { createPosition } from "./helper";
 function App() {
   const [appState, dispatch] = useReducer(reducer, {
     position: [createPosition()],
-    turn: "white",
+    turn: "w",
+    candidateMoves: [],
   });
   const providerState = {
     appState,
-    dispatch,    
+    dispatch,
   };
 
   return (

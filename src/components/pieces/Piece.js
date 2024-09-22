@@ -1,17 +1,40 @@
 import React from "react";
+import { useAppContext } from "../../context/Context";
+import arbiter from "../../arbiter/arbiter";
+import { generateCandidateMoves } from "../../reducer/actions/move";
 
 export default function Piece({ rank, file, piece }) {
+  const { providerState } = useAppContext();
+  const { appState, dispatch } = providerState;
+  const { turn, position } = appState;
+
+  const currentPosition = appState.position[appState.position.length - 1];
+
   const onDragStart = (e) => {
-    // to remove the plus icon that shows up when dragging a piece
     e.dataTransfer.effectAllowed = "move";
     e.dataTransfer.setData("text/plain", `${piece},${rank},${file}`);
-    // Trigger visibility  adding setTimeout so the piece will stay visible while dragging it
     setTimeout(() => {
       e.target.style.display = "none";
     }, 0);
+
+    if (turn === piece[0]) {
+      const candidateMoves = arbiter.getRegularMoves({
+        position: currentPosition,
+        file,
+        rank,
+        piece,
+      }); // legal moves
+
+      console.log(candidateMoves);
+      dispatch(generateCandidateMoves({ candidateMoves }));
+      // console.log(`Candidate moves on drag start: ${JSON.stringify(candidateMoves)}`); // Debug log
+    }
   };
 
-  const onDragEnd = (e) => (e.target.style.display = "block");
+  const onDragEnd = (e) => {
+    e.target.style.display = "block";
+  };
+
   return (
     <div
       onDragEnd={onDragEnd}

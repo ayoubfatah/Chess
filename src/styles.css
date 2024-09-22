@@ -3,6 +3,7 @@
   --light-tile: #fefefe;
   --dark-tile: #5762ef;
   --bg-color: #202020;
+  --highlight: rgba(0, 0, 0, 0.1);
 }
 
 @media all and (max-width: 450px) {
@@ -355,4 +356,35 @@ body {
 }
 .piece.p-70 {
   transform: translate(700%, 700%);
+}
+
+/* highliting */
+.highlight {
+  position: relative;
+}
+.highlight::after {
+  content: "";
+  display: block;
+  position: absolute;
+  width: calc(var(--tile-size) * 0.5);
+  height: calc(var(--tile-size) * 0.5);
+  background-color: var(--highlight);
+  border-radius: 50%;
+  top: 25%;
+  left: 25%;
+}
+
+.attacking {
+  position: relative;
+}
+.attacking::after {
+  content: "";
+  display: block;
+  position: absolute;
+  width: calc(var(--tile-size) - 12px);
+  height: calc(var(--tile-size) - 12px);
+  border: 6px solid var(--highlight);
+  border-radius: 50%;
+  top: 0;
+  left: 0;
 }

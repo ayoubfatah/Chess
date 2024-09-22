@@ -2,12 +2,11 @@ import React, { useRef } from "react";
 import { useAppContext } from "../../context/Context";
 import { copyPosition } from "../../helper";
 import Piece from "./Piece";
-import { makeNewMove } from "../../reducer/actions/move";
+import { clearCandidates, makeNewMove } from "../../reducer/actions/move";
 export default function Pieces() {
   const { providerState } = useAppContext();
   const { appState, dispatch } = providerState;
   const currentPosition = appState.position[appState.position.length - 1];
-  console.log(currentPosition, "");
 
   const ref = useRef();
   const calculateCoord = (e) => {
@@ -26,12 +25,13 @@ export default function Pieces() {
     // 1 - the piece  that has been move we can get it with e.dataTransfer.getData("text")
     const [p, rank, file] = e.dataTransfer.getData("text").split(",");
     // 2 we need to see where the  piece got dropped
-
     const { x, y } = calculateCoord(e);
-    newPosition[+rank][+file] = "";
-    newPosition[x][y] = p;
-
-    dispatch(makeNewMove({ newPosition }));
+    if (appState.candidateMoves?.find((m) => m[0] === x && m[1] === y)) {
+      newPosition[+rank][+file] = "";
+      newPosition[x][y] = p;
+      dispatch(makeNewMove({ newPosition }));
+    }
+    dispatch(clearCandidates());
     // setPosition(newPosition);
   };
 
