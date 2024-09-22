@@ -23,7 +23,7 @@ export default function Piece({ rank, file, piece }) {
         file,
         rank,
         piece,
-      }); // legal moves
+      }); // legal moves 
 
       console.log(candidateMoves);
       dispatch(generateCandidateMoves({ candidateMoves }));

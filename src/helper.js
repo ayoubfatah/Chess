@@ -5,9 +5,13 @@ export const isEven = (num) => (num % 2 === 0 ? true : false);
 export const createPosition = () => {
   const position = new Array(8).fill("").map((x) => new Array(8).fill(""));
 
-  for (let i = 0; i < 8; i++) {
-    position[6][i] = "bp";
-  }
+  // for (let i = 0; i < 8; i++) {
+  //   position[1][i] = "wp";
+  // }
+
+  // for (let i = 0; i < 8; i++) {
+  //   position[6][i] = "bp";
+  // }
 
   //   white pieces
   position[0][0] = "wr";

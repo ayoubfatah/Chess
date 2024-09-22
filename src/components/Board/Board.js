@@ -11,9 +11,6 @@ export default function Board() {
 
   const position = appState.position[appState.position.length - 1];
 
-  console.log("Current Position:", position); // Debugging: Log current position
-  console.log("Candidate Moves:", appState.candidateMoves); // Debugging: Log candidate moves
-
   const ranks = Array(8)
     .fill()
     .map((x, i) => 8 - i);
