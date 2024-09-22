@@ -11,10 +11,10 @@ export const getRookMoves = ({ position, piece, rank, file }) => {
     [0, 1], // Move right (along the file)
   ];
 
-  direction.forEach((dir) => {
+  direction.forEach((direction) => {
     for (let i = 1; i <= 8; i++) {
-      const x = rank + i * dir[0];
-      const y = file + i * dir[1];
+      const x = rank + i * direction[0];
+      const y = file + i * direction[1];
       if (position?.[x]?.[y] === undefined) break;
       if (position[x][y].startsWith(enemy)) {
         moves.push([x, y]);
@@ -146,5 +146,48 @@ export const getKingMoves = ({ position, piece, rank, file }) => {
     }
   });
 
+  return moves;
+};
+
+export const getPawnMoves = ({ position, piece, rank, file }) => {
+  const moves = [];
+  const dir = piece === "wp" ? 1 : -1;
+  const us = piece[0];
+  const enemy = us === "w" ? "b" : "w";
+
+  if (!position?.[rank + dir][file]) {
+    moves.push([rank + dir, file]);
+  }
+
+  if ((us === "w" && rank === 1) || (us === "b" && rank === 6)) {
+    if (
+      position?.[rank + dir]?.[file] === "" &&
+      position?.[rank + dir + dir]?.[file] === ""
+    ) {
+      moves.push([rank + dir + dir, file]);
+    }
+  }
+
+  if (position[rank][file]) return moves;
+};
+
+export const getPawnCaptures = ({ position, piece, rank, file }) => {
+  const moves = [];
+  const dir = piece === "wp" ? 1 : -1;
+  const us = piece[0];
+  const enemy = us === "w" ? "b" : "w";
+  if (
+    position?.[rank + dir]?.[file - 1] &&
+    position?.[rank + dir]?.[file - 1].startsWith(enemy)
+  ) {
+    moves.push([rank + dir, file - 1]);
+  }
+
+  if (
+    position?.[rank + dir]?.[file + 1] &&
+    position?.[rank + dir]?.[file + 1].startsWith(enemy)
+  ) {
+    moves.push([rank + dir, file + 1]);
+  }
   return moves;
 };
