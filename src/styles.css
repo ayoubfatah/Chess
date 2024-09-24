@@ -44,14 +44,16 @@ body {
   transform: translateX(20px);
   font: 900;
 }
+
+.rank {
+  margin-bottom: calc(var(--tile-size) - 18px);
+}
+
 .light-color {
   color: var(--light-tile);
 }
 .dark-color {
   color: var(--dark-tile);
-}
-.rank {
-  margin-bottom: calc(var(--tile-size) - 18px);
 }
 
 .files {

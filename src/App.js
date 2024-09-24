@@ -1,4 +1,4 @@
-import { useReducer } from "react";
+import { useEffect, useReducer } from "react";
 import Board from "./components/Board/Board";
 import AppContext from "./context/Context";
 import "./styles.css";

@@ -26,9 +26,11 @@ export default function Piece({ rank, file, piece }) {
       }); // legal moves
 
       dispatch(generateCandidateMoves({ candidateMoves }));
-      // console.log(`Candidate moves on drag start: ${JSON.stringify(candidateMoves)}`); // Debug log
+
     }
   };
+
+
 
   const onDragEnd = (e) => {
     e.target.style.display = "block";

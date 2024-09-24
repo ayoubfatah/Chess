@@ -1,9 +1,12 @@
 export const getRookMoves = ({ position, piece, rank, file }) => {
+  // Initialize an empty array to store the moves
   const moves = [];
+  // Determine the color of the piece (white or black)
   const us = piece[0];
+  // Determine the color of the enemy pieces
   const enemy = us === "w" ? "b" : "w";
 
-  // Directions for the rook (vertical and horizontal)
+  // Define the directions for the rook to move (up, down, left, right)
   const direction = [
     [-1, 0], // Move up (along the rank)
     [1, 0], // Move down (along the rank)
@@ -11,22 +14,30 @@ export const getRookMoves = ({ position, piece, rank, file }) => {
     [0, 1], // Move right (along the file)
   ];
 
+  // Iterate through each direction
   direction.forEach((direction) => {
+    // Check for moves up to 8 squares in each direction
     for (let i = 1; i <= 8; i++) {
+      // Calculate the new position based on the direction and iteration
       const x = rank + i * direction[0];
       const y = file + i * direction[1];
+      // If the new position is off the board, break the loop
       if (position?.[x]?.[y] === undefined) break;
+      // If the new position contains an enemy piece, add it to moves and break the loop
       if (position[x][y].startsWith(enemy)) {
         moves.push([x, y]);
         break;
       }
+      // If the new position contains a piece of the same color, break the loop
       if (position[x][y].startsWith(us)) {
         break;
       }
+      // If the new position is empty, add it to moves
       moves.push([x, y]);
     }
   });
 
+  // Return the array of moves
   return moves;
 };
 
@@ -191,3 +202,4 @@ export const getPawnCaptures = ({ position, piece, rank, file }) => {
   }
   return moves;
 };
+

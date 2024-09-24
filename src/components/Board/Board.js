@@ -22,6 +22,7 @@ export default function Board() {
   const getClassName = (i, j) => {
     let className = "tile";
     className += (i + j) % 2 === 0 ? " dark-tile" : " light-tile";
+    // This line checks if the current tile (i, j) is part of the candidate moves for the current piece.
     if (appState.candidateMoves?.find((m) => m[0] === i && m[1] === j)) {
       // if a piece exist it would be an enemy only
       if (position[i][j]) {
@@ -30,8 +31,10 @@ export default function Board() {
         className += "  highlight";
       }
     }
+
     return className;
   };
+
   return (
     <div className="board">
       <Ranks ranks={ranks} />
