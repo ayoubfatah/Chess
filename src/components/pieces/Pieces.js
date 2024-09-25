@@ -34,6 +34,9 @@ export default function Pieces() {
     const { x, y } = calculateCoord(e);
 
     if (appState.candidateMoves?.find((m) => m[0] === x && m[1] === y)) {
+      if (p.endsWith("p") && !newPosition[x][y] && x !== rank && y !== file) {
+        newPosition[rank][y] = "";
+      }
       newPosition[+rank][+file] = "";
       newPosition[x][y] = p;
       dispatch(makeNewMove({ newPosition }));
@@ -56,7 +59,6 @@ export default function Pieces() {
     // Clear the candidate moves
     dispatch(clearCandidates());
   };
-
   //   so the onDrop can take over the onDragOver functionality
   const onDragOver = (e) => e.preventDefault();
 

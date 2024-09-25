@@ -9,7 +9,13 @@ import {
 } from "./getMoves";
 
 const arbiter = {
-  getRegularMoves: function ({ position, piece, rank, file }) {
+  getRegularMoves: function ({
+    position,
+    previousPosition,
+    piece,
+    rank,
+    file,
+  }) {
     if (piece.endsWith("r")) {
       return getRookMoves({ position, piece, rank, file });
     }
@@ -28,7 +34,7 @@ const arbiter = {
     if (piece.endsWith("p")) {
       return [
         ...getPawnMoves({ position, rank, file, piece }),
-        ...getPawnCaptures({ position, rank, file, piece }),
+        ...getPawnCaptures({ position, rank, file, piece, previousPosition }),
       ];
     }
   },

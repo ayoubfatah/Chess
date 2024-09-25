@@ -23,14 +23,12 @@ export default function Piece({ rank, file, piece }) {
         file,
         rank,
         piece,
+        previousPosition: appState.position[appState.position.length - 2],
       }); // legal moves
 
       dispatch(generateCandidateMoves({ candidateMoves }));
-
     }
   };
-
-
 
   const onDragEnd = (e) => {
     e.target.style.display = "block";
