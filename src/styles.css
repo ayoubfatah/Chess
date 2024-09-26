@@ -1,5 +1,5 @@
 :root {
-  --tile-size: 90px;
+  --tile-size: 80px;
   --light-tile: #fefefe;
   --dark-tile: #5762ef;
   --bg-color: #202020;
@@ -391,11 +391,53 @@ body {
   left: 0;
 }
 
-
-
 /* POP UPS  */
 
+.popup {
+  position: absolute;
+  left: calc(0.25 * var(--tile-size));
+  right: 0;
+  top: 0;
+  bottom: calc(0.25 * var(--tile-size));
+}
 
+.popup-pieces-box {
+  width: 50%;
 
+  background: var(--light-tile);
+  position: absolute;
+  border: 8px solid var(--light-tile);
+  box-shadow: 0 0 0 5px var(--dark-tile);
+}
 
 /* PROMOTION  */
+
+.promotion-choices {
+  height: 12.5%;
+}
+
+.promotion-choices .piece {
+  width: 25%;
+  height: 100%;
+}
+
+.promotion-choices .piece:hover {
+  box-shadow: 0 0 0 5px var(--dark-tile) inset;
+  transform: scale(1.05);
+}
+
+.promotion-choices :is(.wq, .bq) {
+  left: 0;
+}
+
+.promotion-choices :is(.wr, .br) {
+  left: 25%;
+}
+
+.promotion-choices :is(.wb, .bb) {
+  left: 50%;
+}
+
+.promotion-choices :is(.wkn, .bkn) {
+  left: 75%;
+}

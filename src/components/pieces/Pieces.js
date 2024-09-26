@@ -9,6 +9,7 @@ import {
 } from "../../customHooks/useMoveSound";
 import { useCaptureSound } from "../../customHooks/useCaptureSound";
 import arbiter from "../../arbiter/arbiter";
+import { openPromotion } from "../../reducer/actions/popUpAction";
 
 //
 
@@ -31,6 +32,10 @@ export default function Pieces() {
     return { x, y };
   };
 
+  const openPromotionBox = ({ rank, file, x, y }) => {
+    dispatch(openPromotion({ rank: +rank, file: +file, x, y }));
+  };
+
   const move = (e) => {
     // Retrieve the piece type (p), rank, and file from the data being dragged
     const [piece, rank, file] = e.dataTransfer.getData("text").split(",");
@@ -38,6 +43,11 @@ export default function Pieces() {
     const { x, y } = calculateCoord(e);
     // Check if the drop coordinates are valid candidate moves
     if (appState.candidateMoves?.find((m) => m[0] === x && m[1] === y)) {
+      // checking if the pieces reached the end so we can promote it :
+      if ((piece === "wp" && x === 7) || (piece === "bp" && x === 0)) {
+        openPromotionBox({ rank, file, x, y });
+      }
+
       // Create a new position based on the current position to avoid mutating the original state
       const newPosition = arbiter.performMove({
         position: currentPosition,

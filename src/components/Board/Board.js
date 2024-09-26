@@ -4,6 +4,7 @@ import Files from "./bits/Files";
 import Ranks from "./bits/Ranks";
 import Pieces from "../pieces/Pieces";
 import { useAppContext } from "../../context/Context";
+import PopUp from "../PopUps/PopUp";
 
 export default function Board() {
   const { providerState } = useAppContext();
@@ -49,6 +50,7 @@ export default function Board() {
         })}
       </div>
       <Pieces />
+      <PopUp />
       <Files files={files} />
     </div>
   );
