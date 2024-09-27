@@ -1,5 +1,6 @@
 import {
   getBishopMoves,
+  getCastlingMove,
   getKingMoves,
   getKnightMoves,
   getPawnCaptures,
@@ -36,7 +37,14 @@ const arbiter = {
       return getPawnMoves({ position, rank, file, piece });
     }
   },
-  getValidMoves: function ({ position, previousPosition, piece, rank, file }) {
+  getValidMoves: function ({
+    position,
+    previousPosition,
+    castlingDirection,
+    piece,
+    rank,
+    file,
+  }) {
     // Call the getRegularMoves method to get the basic valid moves for the piece
     let moves = this.getRegularMoves({
       position, // Current position of the board
@@ -57,6 +65,20 @@ const arbiter = {
           file, // The file of the pawn
           piece, // The pawn piece itself
           previousPosition, // The position of the board before the last move
+        }),
+      ];
+    }
+
+    if (piece.endsWith("k")) {
+      // If it's a pawn, add its capture moves to the list of valid moves
+      moves = [
+        ...moves, // Spread the existing moves into a new array
+        ...getCastlingMove({
+          position, // Current position of the board
+          rank, // The rank of the pawn
+          file, // The file of the pawn
+          piece, // The pawn piece itself
+          castlingDirection,
         }),
       ];
     }

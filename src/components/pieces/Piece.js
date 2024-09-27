@@ -6,7 +6,7 @@ import { generateCandidateMoves } from "../../reducer/actions/move";
 export default function Piece({ rank, file, piece }) {
   const { providerState } = useAppContext();
   const { appState, dispatch } = providerState;
-  const { turn, position } = appState;
+  const { turn, castlingDirection } = appState;
 
   const currentPosition = appState.position[appState.position.length - 1];
 
@@ -21,6 +21,7 @@ export default function Piece({ rank, file, piece }) {
       const candidateMoves = arbiter.getValidMoves({
         position: currentPosition,
         file,
+        castlingDirection: castlingDirection[turn],
         rank,
         piece,
         previousPosition: appState.position[appState.position.length - 2],

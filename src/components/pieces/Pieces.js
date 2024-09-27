@@ -10,6 +10,12 @@ import {
 import { useCaptureSound } from "../../customHooks/useCaptureSound";
 import arbiter from "../../arbiter/arbiter";
 import { openPromotion } from "../../reducer/actions/popUpAction";
+import { updateCastling } from "../../reducer/actions/king";
+import {
+  getCastleDirections,
+  getCastlingDirections,
+  getCastlingMove,
+} from "../../arbiter/getMoves";
 
 //
 
@@ -36,6 +42,19 @@ export default function Pieces() {
     dispatch(openPromotion({ rank: +rank, file: +file, x, y }));
   };
 
+  const updateCastlingState = ({ piece, rank, file }) => {
+    const direction = getCastlingDirections({
+      castlingDirection: appState.castlingDirection,
+      piece,
+      rank,
+      file,
+    });
+
+    if (direction) {
+      dispatch(updateCastling(direction));
+    }
+  };
+
   const move = (e) => {
     // Retrieve the piece type (p), rank, and file from the data being dragged
     const [piece, rank, file] = e.dataTransfer.getData("text").split(",");
@@ -47,7 +66,9 @@ export default function Pieces() {
       if ((piece === "wp" && x === 7) || (piece === "bp" && x === 0)) {
         openPromotionBox({ rank, file, x, y });
       }
-
+      if (piece.endsWith("k") || piece.endsWith("r")) {
+        updateCastlingState({ piece, rank, file });
+      }
       // Create a new position based on the current position to avoid mutating the original state
       const newPosition = arbiter.performMove({
         position: currentPosition,

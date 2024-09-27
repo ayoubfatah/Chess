@@ -1,3 +1,4 @@
+import { act } from "react";
 import { Status } from "../constant";
 import { actionTypes } from "./actions/actionTypes";
 
@@ -37,6 +38,15 @@ export const reducer = (state, action) => {
     }
     default: {
       return state;
+    }
+
+    case actionTypes.CAN_CASTLE: {
+      let { turn, castlingDirection } = state;
+      castlingDirection[turn] = action.payload;
+      return {
+        ...state,
+        castlingDirection,
+      };
     }
   }
 };

@@ -18,11 +18,18 @@ export const movePawn = ({ position, piece, rank, file, x, y }) => {
 export const movePiece = ({ position, piece, rank, file, x, y }) => {
   // Define the movePiece function that takes the current position, piece, its rank and file, and the target x and y coordinates.
   const newPosition = copyPosition(position); // Create a new position by copying the current position to avoid mutating the original state.
-
+  if (piece.endsWith("k") && Math.abs(y - file) > 1) {
+    if (y === 2) {
+      newPosition[rank][0] = "";
+      newPosition[rank][3] = piece.startsWith("w") ? "wr" : "br";
+    }
+    if (y === 6) {
+      newPosition[rank][7] = "";
+      newPosition[rank][5] = piece.startsWith("w") ? "wr" : "br";
+    }
+  }
   newPosition[rank][file] = ""; // Clear the original position of the piece (its current rank and file).
   newPosition[x][y] = piece; // Place the piece in the new position (x, y).
 
   return newPosition; // Return the updated position after the move.
 };
-
-
