@@ -2,9 +2,11 @@ import {
   getBishopMoves,
   getCastlingMove,
   getKingMoves,
+  getKingPosition,
   getKnightMoves,
   getPawnCaptures,
   getPawnMoves,
+  getPieces,
   getQueenMoves,
   getRookMoves,
 } from "./getMoves";
@@ -53,6 +55,7 @@ const arbiter = {
       rank, // The rank (row) of the piece on the board
       file, // The file (column) of the piece on the board
     });
+    const notInCheckMoves = [];
 
     // Check if the piece is a pawn (indicated by 'p' at the end of its identifier)
     if (piece.endsWith("p")) {
@@ -83,8 +86,25 @@ const arbiter = {
       ];
     }
 
+    moves.forEach(([x, y]) => {
+      const positionAfterMove = this.performMove({
+        position,
+        piece,
+        rank,
+        file,
+        x,
+        y,
+      });
+
+      if (
+        !this.isPlayerInCheck({ positionAfterMove, position, player: piece[0] })
+      ) {
+        notInCheckMoves.push([x, y]);
+      }
+    });
+
     // Return the complete list of valid moves, including regular moves and captures
-    return moves;
+    return notInCheckMoves;
   },
   performMove: function ({
     position,
@@ -99,6 +119,44 @@ const arbiter = {
       return movePawn({ position, piece, rank, file, x, y });
     } else {
       return movePiece({ position, piece, rank, file, x, y });
+    }
+  },
+  isPlayerInCheck: function ({ positionAfterMove, position, player }) {
+    const enemy = player.startsWith("w") ? "b" : "w";
+    let kingPos = getKingPosition(positionAfterMove, player);
+    const enemyPieces = getPieces(positionAfterMove, enemy) || []; // Ensure enemyPieces is an array
+
+    // Debugging logs
+    console.log("Player:", player);
+    console.log("Enemy:", enemy);
+    console.log("King Position:", kingPos);
+    console.log("Enemy Pieces:", enemyPieces);
+
+    const enemyMoves = enemyPieces.reduce((acc, p) => {
+      console.log("Processing Piece:", p); // Log each enemy piece being processed
+      return [
+        ...acc,
+        ...(p.piece.endsWith("p")
+          ? getPawnCaptures({
+              position: positionAfterMove,
+              prevPosition: position,
+              ...p,
+            })
+          : this.getRegularMoves({
+              position: positionAfterMove,
+              ...p,
+            })),
+      ];
+    }, []);
+
+    console.log("Enemy Moves:", enemyMoves); // Log all enemy moves
+
+    if (enemyMoves.some(([x, y]) => kingPos[0] === x && kingPos[1] === y)) {
+      console.log("King is in check!"); // Log if the king is in check
+      return true;
+    } else {
+      console.log("King is safe."); // Log if the king is safe
+      return false;
     }
   },
 };
