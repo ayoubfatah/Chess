@@ -441,3 +441,19 @@ body {
 .promotion-choices :is(.wkn, .bkn) {
   left: 75%;
 }
+
+/* chech */
+.checked {
+  position: relative;
+}
+.checked::after {
+  content: "";
+  display: block;
+  position: absolute;
+  width: var(--tile-size);
+  height: var(--tile-size);
+  
+  background-color: red;
+  top: 0;
+  left: 0;
+}

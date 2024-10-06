@@ -1,16 +1,34 @@
-import React from "react";
+import React, { useEffect, useMemo } from "react";
 import { getCharacter } from "../../helper";
 import Files from "./bits/Files";
 import Ranks from "./bits/Ranks";
 import Pieces from "../pieces/Pieces";
 import { useAppContext } from "../../context/Context";
 import PopUp from "../PopUps/PopUp";
+import arbiter from "../../arbiter/arbiter";
+import { getKingMoves, getKingPosition } from "../../arbiter/getMoves";
 
 export default function Board() {
   const { providerState } = useAppContext();
   const { appState, dispatch } = providerState;
 
   const position = appState.position[appState.position.length - 1];
+
+  // highlight check
+  const checkTile = (() => {
+    const isInCheck = arbiter.isPlayerInCheck({
+      positionAfterMove: position,
+      player: appState.turn,
+    });
+
+    if (isInCheck) {
+      const kingPosition = getKingPosition(position, appState.turn);
+
+      return kingPosition;
+    }
+
+    return null;
+  })();
 
   const ranks = Array(8)
     .fill()
@@ -23,16 +41,25 @@ export default function Board() {
   const getClassName = (i, j) => {
     let className = "tile";
     className += (i + j) % 2 === 0 ? " dark-tile" : " light-tile";
-    // This line checks if the current tile (i, j) is part of the candidate moves for the current piece.
-    if (appState.candidateMoves?.find((m) => m[0] === i && m[1] === j)) {
-      // if a piece exist it would be an enemy only
-      if (position[i][j]) {
-        className += "  attacking";
-      } else {
-        className += "  highlight";
-      }
-    }
 
+    // Check for candidate moves
+    const isCandidateMove = appState.candidateMoves?.find(
+      (m) => m[0] === i && m[1] === j
+    );
+
+    // Add highlight or attack class
+    if (isCandidateMove) {
+      if (position[i][j]) {
+        className += " attacking";
+      } else {
+        className += " highlight";
+      }
+
+      // If tile contains the king and the king is in check, add "checked"
+    }
+    if (checkTile && checkTile[0] === i && checkTile[1] === j) {
+      className += " checked";
+    }
     return className;
   };
 

@@ -127,13 +127,9 @@ const arbiter = {
     const enemyPieces = getPieces(positionAfterMove, enemy) || []; // Ensure enemyPieces is an array
 
     // Debugging logs
-    console.log("Player:", player);
-    console.log("Enemy:", enemy);
-    console.log("King Position:", kingPos);
-    console.log("Enemy Pieces:", enemyPieces);
 
     const enemyMoves = enemyPieces.reduce((acc, p) => {
-      console.log("Processing Piece:", p); // Log each enemy piece being processed
+      // console.log("Processing Piece:", p); // Log each enemy piece being processed
       return [
         ...acc,
         ...(p.piece.endsWith("p")
@@ -149,13 +145,10 @@ const arbiter = {
       ];
     }, []);
 
-    console.log("Enemy Moves:", enemyMoves); // Log all enemy moves
-
     if (enemyMoves.some(([x, y]) => kingPos[0] === x && kingPos[1] === y)) {
-      console.log("King is in check!"); // Log if the king is in check
+      console.log("checked");
       return true;
     } else {
-      console.log("King is safe."); // Log if the king is safe
       return false;
     }
   },
