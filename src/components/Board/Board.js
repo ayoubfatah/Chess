@@ -7,6 +7,8 @@ import { useAppContext } from "../../context/Context";
 import PopUp from "../PopUps/PopUp";
 import arbiter from "../../arbiter/arbiter";
 import { getKingMoves, getKingPosition } from "../../arbiter/getMoves";
+import PromotionBox from "../PopUps/PromotionBox";
+import GameEnds from "../PopUps/GameEnds";
 
 export default function Board() {
   const { providerState } = useAppContext();
@@ -77,7 +79,10 @@ export default function Board() {
         })}
       </div>
       <Pieces />
-      <PopUp />
+      <PopUp>
+        <PromotionBox />
+        <GameEnds />
+      </PopUp>
       <Files files={files} />
     </div>
   );

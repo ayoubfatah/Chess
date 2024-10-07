@@ -36,9 +36,6 @@ export const reducer = (state, action) => {
         turn: turn,
       };
     }
-    default: {
-      return state;
-    }
 
     case actionTypes.CAN_CASTLE: {
       let { turn, castlingDirection } = state;
@@ -47,6 +44,21 @@ export const reducer = (state, action) => {
         ...state,
         castlingDirection,
       };
+    }
+
+    case actionTypes.STALEMATE: {
+      return {
+        ...state,
+        status: Status.stalemate,
+      };
+    }
+    case actionTypes.NEW_GAME: {
+      return {
+        ...action.payload,
+      };
+    }
+    default: {
+      return state;
     }
   }
 };

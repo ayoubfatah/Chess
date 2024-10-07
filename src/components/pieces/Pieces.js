@@ -10,7 +10,7 @@ import {
 import { useCaptureSound } from "../../customHooks/useCaptureSound";
 import arbiter from "../../arbiter/arbiter";
 import { openPromotion } from "../../reducer/actions/popUpAction";
-import { updateCastling } from "../../reducer/actions/king";
+import { detectStalemate, updateCastling } from "../../reducer/actions/game";
 import {
   getCastleDirections,
   getCastlingDirections,
@@ -62,6 +62,13 @@ export default function Pieces() {
     const { x, y } = calculateCoord(e);
     // Check if the drop coordinates are valid candidate moves
     if (appState.candidateMoves?.find((m) => m[0] === x && m[1] === y)) {
+      const opponent = piece.startsWith("w") ? "b" : "w";
+
+      const castleDirection =
+        appState.castlingDirection[
+          `${piece.startsWith("b") ? "white" : "black"}`
+        ];
+      console.log("caste", castleDirection);
       // checking if the pieces reached the end so we can promote it :
       if ((piece === "wp" && x === 7) || (piece === "bp" && x === 0)) {
         openPromotionBox({ rank, file, x, y });
@@ -92,6 +99,10 @@ export default function Pieces() {
       }
       // Dispatch the action to update the game state with the new position
       dispatch(makeNewMove({ newPosition }));
+
+      if (arbiter.isStalemate(newPosition, opponent, castleDirection)) {
+        dispatch(detectStalemate());
+      }
     }
     // Clear the candidate moves after the drop action
     dispatch(clearCandidates());
