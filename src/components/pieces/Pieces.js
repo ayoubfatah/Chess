@@ -10,7 +10,11 @@ import {
 import { useCaptureSound } from "../../customHooks/useCaptureSound";
 import arbiter from "../../arbiter/arbiter";
 import { openPromotion } from "../../reducer/actions/popUpAction";
-import { detectStalemate, updateCastling } from "../../reducer/actions/game";
+import {
+  detectInsufficientMaterial,
+  detectStalemate,
+  updateCastling,
+} from "../../reducer/actions/game";
 import {
   getCastleDirections,
   getCastlingDirections,
@@ -99,8 +103,9 @@ export default function Pieces() {
       }
       // Dispatch the action to update the game state with the new position
       dispatch(makeNewMove({ newPosition }));
-
-      if (arbiter.isStalemate(newPosition, opponent, castleDirection)) {
+      if (arbiter.insufficientMaterial(newPosition)) {
+        dispatch(detectInsufficientMaterial());
+      } else if (arbiter.isStalemate(newPosition, opponent, castleDirection)) {
         dispatch(detectStalemate());
       }
     }

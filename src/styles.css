@@ -407,7 +407,7 @@ body {
   background: var(--light-tile);
   position: absolute;
   border: 8px solid var(--light-tile);
-  box-shadow: 0 0 0 5px var(--dark-tile);
+  box-shadow: 0 0 0 5px black;
 }
 
 .popup--inner__center {
