@@ -12,6 +12,13 @@ export const detectStalemate = () => {
     type: actionTypes.STALEMATE,
   };
 };
+
+export const detectCheckMate = (winner) => {
+  return {
+    type: actionTypes.WIN,
+    payload: winner,
+  };
+};
 export const detectInsufficientMaterial = () => {
   return {
     type: actionTypes.INSUFFICIENT_MATERIAL,

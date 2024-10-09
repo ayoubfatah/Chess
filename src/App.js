@@ -7,6 +7,10 @@ import { reducer } from "./reducer/reducer";
 import { createPosition } from "./helper";
 import PromotionBox from "./components/PopUps/PromotionBox";
 import { initGameState } from "./constant";
+import Control from "./components/Control";
+
+import TakeBack from "./components/TakeBack";
+import MovesList from "./components/MovesList";
 
 function App() {
   const [appState, dispatch] = useReducer(reducer, initGameState);
@@ -19,6 +23,10 @@ function App() {
     <AppContext.Provider value={{ providerState }}>
       <div className="App">
         <Board />
+        <Control>
+          <MovesList />
+          <TakeBack />
+        </Control>
       </div>
     </AppContext.Provider>
   );

@@ -24,8 +24,9 @@ body {
   display: grid;
   place-content: center;
   height: 100vh;
-  background-color: var(--bg-color);
-  color: white;
+  background: var(--bg-color);
+  font-family: "Sofia Sans", sans-serif;
+  grid-template-columns: auto 220px;
 }
 
 /* board */
@@ -483,4 +484,61 @@ button {
   padding: 10px 30px;
   margin: 10px 0;
   font-size: 1.1em;
+}
+
+.wins {
+  height: var(--tile-size);
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.wins.White {
+  background-image: url(./assets/images/pieces/wk.png);
+}
+.wins.Black {
+  background-image: url(./assets/images/pieces/bk.png);
+}
+
+.draws {
+  height: var(--tile-size);
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: 35% center, 65% center;
+  background-image: url(./assets/images/pieces/wk.png),
+    url(./assets/images/pieces/bk.png);
+}
+
+/* control  */
+.control {
+  color: white !important;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  text-align: center;
+  height: calc(8 * var(--tile-size));
+}
+
+.moves-list {
+  display: flex;
+  flex-direction: row;
+  color: var(--dark-tile);
+  flex: 1 1;
+  flex-wrap: wrap;
+  align-content: start;
+  overflow: auto;
+  font-size: 1.1em;
+}
+.moves-list div {
+  flex-basis: 35%;
+  padding-left: 15%;
+  text-align: left;
+  position: relative;
+  padding-bottom: 5px;
+}
+.moves-list div[data-number]:nth-child(odd)::before {
+  content: attr(data-number);
+  position: absolute;
+  left: 0;
+  opacity: 0.5;
 }

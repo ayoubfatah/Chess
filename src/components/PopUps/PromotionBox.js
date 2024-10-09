@@ -1,6 +1,6 @@
 import React from "react";
 import { useAppContext } from "../../context/Context";
-import { copyPosition } from "../../helper";
+import { copyPosition, getNewMoveNotation } from "../../helper";
 import {
   clearCandidates,
   clearPromotion,
@@ -43,7 +43,13 @@ export default function PromotionBox() {
     newPosition[promotionSquare.rank][promotionSquare.file] = "";
     newPosition[promotionSquare.x][promotionSquare.y] = color + piece;
     dispatch(clearCandidates());
-    dispatch(makeNewMove({ newPosition }));
+    const newMove = getNewMoveNotation({
+      ...promotionSquare,
+      piece: color + "p",
+      promotesTo: piece,
+      position: appState.position[appState.position.length - 1],
+    });
+    dispatch(makeNewMove({ newPosition, newMove }));
     dispatch(closePromotionSquare());
   };
   return (

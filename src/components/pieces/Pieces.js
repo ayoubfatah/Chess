@@ -1,25 +1,19 @@
 import React, { useRef } from "react";
-import { useAppContext } from "../../context/Context";
-import { copyPosition } from "../../helper";
-import Piece from "./Piece";
-import { clearCandidates, makeNewMove } from "../../reducer/actions/move";
-import {
-  useMoveSound,
-  useNotificationSound,
-} from "../../customHooks/useMoveSound";
-import { useCaptureSound } from "../../customHooks/useCaptureSound";
 import arbiter from "../../arbiter/arbiter";
-import { openPromotion } from "../../reducer/actions/popUpAction";
+import { getCastlingDirections } from "../../arbiter/getMoves";
+import { useAppContext } from "../../context/Context";
+import { useCaptureSound } from "../../customHooks/useCaptureSound";
+import { useMoveSound } from "../../customHooks/useMoveSound";
 import {
+  detectCheckMate,
   detectInsufficientMaterial,
   detectStalemate,
   updateCastling,
 } from "../../reducer/actions/game";
-import {
-  getCastleDirections,
-  getCastlingDirections,
-  getCastlingMove,
-} from "../../arbiter/getMoves";
+import { clearCandidates, makeNewMove } from "../../reducer/actions/move";
+import { openPromotion } from "../../reducer/actions/popUpAction";
+import Piece from "./Piece";
+import { getNewMoveNotation } from "../../helper";
 
 //
 
@@ -72,7 +66,7 @@ export default function Pieces() {
         appState.castlingDirection[
           `${piece.startsWith("b") ? "white" : "black"}`
         ];
-      console.log("caste", castleDirection);
+
       // checking if the pieces reached the end so we can promote it :
       if ((piece === "wp" && x === 7) || (piece === "bp" && x === 0)) {
         openPromotionBox({ rank, file, x, y });
@@ -96,17 +90,31 @@ export default function Pieces() {
 
       // If there is an enemy piece, play the capture sound
       if (isEnemyPiece) {
+        const takenPiece = currentPosition[x][y]; // Store the taken piece
+        console.log("Taken piece:", takenPiece); // Log
         playCaptureSound(); // Play sound for capturing an enemy piece
       } else {
         // If it's a legal move without capturing, play the legal move sound
         playMoveLegalSound(); // Play sound for a legal move
       }
+
+      const newMove = getNewMoveNotation({
+        piece,
+        rank,
+        file,
+        x,
+        y,
+        position: currentPosition,
+      });
+
       // Dispatch the action to update the game state with the new position
-      dispatch(makeNewMove({ newPosition }));
+      dispatch(makeNewMove({ newPosition, newMove }));
       if (arbiter.insufficientMaterial(newPosition)) {
         dispatch(detectInsufficientMaterial());
       } else if (arbiter.isStalemate(newPosition, opponent, castleDirection)) {
         dispatch(detectStalemate());
+      } else if (arbiter.isCheckMate(newPosition, opponent, castleDirection)) {
+        dispatch(detectCheckMate(piece));
       }
     }
     // Clear the candidate moves after the drop action

@@ -1,3 +1,4 @@
+import MovesList from "./components/MovesList"; // Ensure this path is correct
 import { createPosition } from "./helper";
 
 export const Status = {
@@ -12,6 +13,7 @@ export const Status = {
 export const initGameState = {
   position: [createPosition()],
   turn: "w",
+  movesList: [],
   candidateMoves: [],
   status: Status.ongoing,
   promotionSquare: null,
