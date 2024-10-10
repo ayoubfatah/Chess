@@ -11,6 +11,7 @@ import Control from "./components/Control";
 
 import TakeBack from "./components/TakeBack";
 import MovesList from "./components/MovesList";
+import CapturedPiecesByWhite from "./components/capturedPieces/CapturedPiecesByWhite";
 
 function App() {
   const [appState, dispatch] = useReducer(reducer, initGameState);
@@ -25,8 +26,9 @@ function App() {
         <Board />
         <Control>
           <MovesList />
-          <TakeBack />
+          {/* <TakeBack /> */}
         </Control>
+        <CapturedPiecesByWhite />
       </div>
     </AppContext.Provider>
   );

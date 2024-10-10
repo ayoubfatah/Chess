@@ -57,7 +57,7 @@ export const getKnightMoves = ({ position, rank, file }) => {
   const enemy = position[rank][file].startsWith("w") ? "b" : "w";
 
   // Define the possible movement patterns for a knight
-  // Knights move in an "L" shape: two squares in one direction and then one square perpendicular
+  // Knights move in an "L" shape: two squares in one  direction and then one square perpendicular
   const candidates = [
     [-2, -1], // Move up two squares and left one square
     [-2, 1], // Move up two squares and right one square

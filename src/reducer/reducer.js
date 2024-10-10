@@ -86,6 +86,26 @@ export const reducer = (state, action) => {
         ...action.payload,
       };
     }
+
+    // taken by white
+    case actionTypes.TAKEN_BY_WHITE: {
+      let { piecesTakenByWhite } = state;
+      piecesTakenByWhite = [...piecesTakenByWhite, action.payload];
+      return {
+        ...state,
+        piecesTakenByWhite,
+      };
+    }
+
+    case actionTypes.TAKEN_BY_BLACK: {
+      let { piecesTakenByBlack } = state;
+      piecesTakenByBlack = [...piecesTakenByBlack, action.payload];
+      return {
+        ...state,
+        piecesTakenByBlack,
+      };
+    }
+
     default: {
       return state;
     }

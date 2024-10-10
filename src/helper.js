@@ -15,24 +15,24 @@ export const createPosition = () => {
 
   // //   white pieces
   position[0][0] = "wr";
-  position[0][1] = "wkn";
+  position[0][1] = "wn";
   position[0][2] = "wb";
   position[0][3] = "wq";
   position[0][4] = "wk";
 
   position[0][5] = "wb";
-  position[0][6] = "wkn";
+  position[0][6] = "wn";
   position[0][7] = "wr";
 
   // //   black pieces
   position[7][0] = "br";
-  position[7][1] = "bkn";
+  position[7][1] = "bn";
   position[7][2] = "bb";
   position[7][3] = "bq";
   position[7][4] = "bk";
 
   position[7][5] = "bb";
-  position[7][6] = "bkn";
+  position[7][6] = "bn";
   position[7][7] = "br";
 
   return position;
@@ -60,7 +60,6 @@ export const findPieceCoords = (position, type) => {
   });
   return results;
 };
-
 export const getNewMoveNotation = ({
   piece,
   rank,
@@ -75,38 +74,71 @@ export const getNewMoveNotation = ({
   rank = Number(rank);
   file = Number(file);
 
-  console.log("Initial parameters:", {
-    piece,
-    rank,
-    file,
-    x,
-    y,
-    position,
-    promotesTo,
-  });
-
+  // Check for castling (king-side and queen-side)
   if (piece[1] === "k" && Math.abs(file - y) === 2) {
     if (file < y) {
-      return "O-O";
+      return "O-O"; // King-side castling
     } else {
-      return "O-O-O";
+      return "O-O-O"; // Queen-side castling
     }
   }
 
-  if (piece[1] !== "p") {
-    note += piece[1].toUpperCase();
-    if (position[x][y]) {
-      note += "x";
-    }
-  } else if (rank !== x && file !== y) {
-    note += getCharacter(file + 1) + "x";
+  // Handle knight moves explicitly
+  if (piece[1] === "n") {
+    note += "N"; // N for knight
+  }
+  // Handle other pieces (except pawns)
+  else if (piece[1] !== "p") {
+    note += piece[1].toUpperCase(); // Add the piece's letter (e.g., R for rook, B for bishop)
   }
 
+  // Handle captures
+  if (position[x][y]) {
+    note += "x"; // Add capture notation
+  }
+
+  // Add destination square
   note += getCharacter(y + 1) + (x + 1);
 
+  // Pawn promotion
   if (promotesTo) {
     note += "=" + promotesTo.toUpperCase();
   }
 
   return note;
+};
+
+export const getCapturedPieceClass = (type) => {
+  switch (type) {
+    case "p": // Pawn
+      return `w-p-captured`;
+    case "q": // Queen
+      return `w-q-captured`;
+    case "r": // Rook
+      return `w-r-captured`;
+    case "b": // Bishop
+      return `w-b-captured`;
+    case "n": // Knight
+      return `w-n-captured`;
+    default:
+      return "";
+  }
+};
+
+export const convertCapturedPieces = (pieces) => {
+  const pieceMap = {};
+
+  pieces.forEach((piece) => {
+    const type = piece[1]; // 'p', 'b', 'n', 'r', 'q', etc.
+
+    // If piece type exists in map, increment the count
+    if (pieceMap[type]) {
+      pieceMap[type] += 1;
+    } else {
+      pieceMap[type] = 1; // Otherwise, initialize the count
+    }
+  });
+
+  // Convert the pieceMap into the desired array of objects
+  return Object.entries(pieceMap).map(([type, count]) => ({ type, count }));
 };

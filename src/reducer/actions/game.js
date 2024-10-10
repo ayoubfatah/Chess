@@ -1,3 +1,4 @@
+import { type } from "@testing-library/user-event/dist/type";
 import { initGameState } from "../../constant";
 import { actionTypes } from "./actionTypes";
 
@@ -29,5 +30,18 @@ export const setupNewGame = () => {
   return {
     type: actionTypes.NEW_GAME,
     payload: initGameState,
+  };
+};
+
+export const takenByWhite = (piece) => {
+  return {
+    type: actionTypes.TAKEN_BY_WHITE,
+    payload: piece,
+  };
+};
+export const takenByBlack = (piece) => {
+  return {
+    type: actionTypes.TAKEN_BY_BLACK,
+    payload: piece,
   };
 };

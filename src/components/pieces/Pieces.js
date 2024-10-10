@@ -8,6 +8,8 @@ import {
   detectCheckMate,
   detectInsufficientMaterial,
   detectStalemate,
+  takenByBlack,
+  takenByWhite,
   updateCastling,
 } from "../../reducer/actions/game";
 import { clearCandidates, makeNewMove } from "../../reducer/actions/move";
@@ -92,6 +94,12 @@ export default function Pieces() {
       if (isEnemyPiece) {
         const takenPiece = currentPosition[x][y]; // Store the taken piece
         console.log("Taken piece:", takenPiece); // Log
+        if (takenPiece[0] === "b") {
+          dispatch(takenByWhite(takenPiece));
+        }
+        if (takenPiece[0] === "w") {
+          dispatch(takenByBlack(takenPiece));
+        }
         playCaptureSound(); // Play sound for capturing an enemy piece
       } else {
         // If it's a legal move without capturing, play the legal move sound

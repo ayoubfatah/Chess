@@ -17,7 +17,7 @@ export default function PromotionBox() {
     return null;
   }
 
-  const options = ["q", "b", "kn", "r"];
+  const options = ["q", "b", "n", "r"];
   const color = promotionSquare.x === 7 ? "w" : "b";
 
   const getPromotionBoxPosition = () => {

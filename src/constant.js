@@ -15,6 +15,8 @@ export const initGameState = {
   turn: "w",
   movesList: [],
   candidateMoves: [],
+  piecesTakenByBlack: [],
+  piecesTakenByWhite: [],
   status: Status.ongoing,
   promotionSquare: null,
   castlingDirection: {
