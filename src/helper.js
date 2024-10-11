@@ -108,18 +108,18 @@ export const getNewMoveNotation = ({
   return note;
 };
 
-export const getCapturedPieceClass = (type) => {
+export const getCapturedPieceClass = (type, color) => {
   switch (type) {
     case "p": // Pawn
-      return `w-p-captured`;
+      return `${color}-p-captured`;
     case "q": // Queen
-      return `w-q-captured`;
+      return `${color}-q-captured`;
     case "r": // Rook
-      return `w-r-captured`;
+      return `${color}-r-captured`;
     case "b": // Bishop
-      return `w-b-captured`;
+      return `${color}-b-captured`;
     case "n": // Knight
-      return `w-n-captured`;
+      return `${color}-n-captured`;
     default:
       return "";
   }

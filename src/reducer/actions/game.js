@@ -15,11 +15,12 @@ export const detectStalemate = () => {
 };
 
 export const detectCheckMate = (winner) => {
+  console.log("Checkmate detected for:", winner); // Log the winner
   return {
     type: actionTypes.WIN,
     payload: winner,
   };
-};
+}; 
 export const detectInsufficientMaterial = () => {
   return {
     type: actionTypes.INSUFFICIENT_MATERIAL,

@@ -6,14 +6,14 @@ import { convertCapturedPieces, getCapturedPieceClass } from "../../helper";
 
 // Main component to render captured pieces
 
-export default function CapturedPiecesByWhite() {
+export default function CapturedPiecesByBlack() {
   const { providerState } = useAppContext();
   const { appState } = providerState;
-  const { piecesTakenByWhite } = appState;
+  const { piecesTakenByBlack } = appState;
 
   // Convert piecesTakenByWhite into counts of each type
-  const pieceWithoutColor = convertCapturedPieces(piecesTakenByWhite);
-  console.log(pieceWithoutColor);
+  const pieceWithoutColor = convertCapturedPieces(piecesTakenByBlack, "b");
+
   return (
     <div className="captured">
       <div className="captured-pieces">
@@ -22,7 +22,7 @@ export default function CapturedPiecesByWhite() {
           Array.from({ length: piece.count }).map((_, idx) => (
             <div
               key={`${index}-${idx}`}
-              className={getCapturedPieceClass(piece.type, "w")}
+              className={getCapturedPieceClass(piece.type, "b")}
             ></div>
           ))
         )}

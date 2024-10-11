@@ -76,6 +76,7 @@ export const reducer = (state, action) => {
     }
 
     case actionTypes.WIN: {
+      console.log("Winning action payload:", action.payload); // Log the payload
       return {
         ...state,
         status: action.payload === "b" ? Status.black : Status.white,

@@ -22,7 +22,9 @@ body {
 
 .App {
   display: grid;
+  margin-top: 30px;
   place-content: center;
+  justify-content: center;
   height: 100vh;
   background: var(--bg-color);
   font-family: "Sofia Sans", sans-serif;
@@ -598,4 +600,52 @@ button {
   background-size: contain;
   background-repeat: no-repeat;
   background-image: url(./assets/images/caputred/1-bb-capture.png);
+}
+/* black captures */
+.b-p-captured {
+  width: 24px;
+  height: 30px;
+
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-image: url(./assets/images/caputred/1-wp-capture.png);
+}
+
+.b-n-captured {
+  width: 25px;
+  height: 30px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-image: url(./assets/images/caputred/1-wn-capture.png);
+}
+
+.b-r-captured {
+  width: 26px;
+  height: 30px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-image: url(./assets/images/caputred/1-wr-capture.png);
+}
+
+.b-q-captured {
+  width: 29px;
+  height: 30px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-image: url(./assets/images/caputred/wq-capture.png);
+}
+
+.b-b-captured {
+  width: 23px;
+  height: 30px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-image: url(./assets/images/caputred/1-wb-capture.png);
+}
+
+.white-pieces {
+  position: absolute;
+  top: 50px;
+  left: 283px;
+  z-index: 1000;
 }

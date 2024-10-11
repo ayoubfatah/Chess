@@ -122,7 +122,7 @@ export default function Pieces() {
       } else if (arbiter.isStalemate(newPosition, opponent, castleDirection)) {
         dispatch(detectStalemate());
       } else if (arbiter.isCheckMate(newPosition, opponent, castleDirection)) {
-        dispatch(detectCheckMate(piece));
+        dispatch(detectCheckMate(piece[0]));
       }
     }
     // Clear the candidate moves after the drop action

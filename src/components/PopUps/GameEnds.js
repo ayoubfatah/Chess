@@ -21,6 +21,7 @@ export default function GameEnds() {
   const newGame = () => {
     dispatch(setupNewGame());
   };
+  console.log("status", status);
   return (
     <div className="popup-pieces-box popup--inner__center ">
       <h1>{isWin ? status : "Draw"}</h1>
